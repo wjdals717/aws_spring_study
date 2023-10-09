@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aws.spring_study.repository.UserMappers">
+
+    <insert id="saveUser" parameterType="com.aws.spring_study.dto.RegisterUserReqDto">      <!--매칭되야 하기 때문에 이름이 같아야 함!!!-->
+        insert into user_tb
+        values (0, #{username}, #{name}, #{phone})
+    </insert>
+
+    <!--자동으로 검색결과를 resultType으로 변환시켜줌, join에서는 X, 변수명이 같을 때만 가능-->
+    <select id="getUserListAll" resultType="com.aws.spring_study.entity.User">
+        select
+            user_id as userId,
+            username,
+            name,
+            phone
+        from
+            user_tb
+    </select>
+
+    <update id="updateUser" parameterType="com.aws.spring_study.dto.ModifyUserReqDto">
+        update
+            user_tb
+        set
+            username = #{username},
+            name = #{name},
+            phone = #{phone}
+        where
+            user_id = #{userId}
+    </update>
+
+    <delete id="deleteUser" parameterType="integer">
+        delete from
+            user_tb
+        where
+            user_id = #{userId}
+    </delete>
+
+</mapper>
